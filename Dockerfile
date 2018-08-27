@@ -6,6 +6,7 @@
 FROM j1mr10rd4n/debian-baseimage-docker:8.2.1
 MAINTAINER Michael Mayer <swd@michael-mayer.biz>
 
+EXPOSE 80
 
 # Set environment variables
 ENV DEBIAN_FRONTEND noninteractive
@@ -189,9 +190,7 @@ RUN apt-get install -y \
 # Configure apache
 RUN sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini \
 	&& sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf \
-	&& sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
-	&& sed -i 's/VirtualHost \*:80/VirtualHost \*:8082/' /etc/apache2/sites-available/000-default.conf \
-	&& sed -i 's/Listen 80/Listen 8082/' /etc/apache2/ports.conf
+	&& sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 
 # Setup services
